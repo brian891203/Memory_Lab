@@ -1,0 +1,48 @@
+
+**** Build of configuration Debug for project OutOfBox_MSP430FR4133 ****
+
+"C:\\ti\\ccs1250\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../StopWatchMode.c"
+Invoking: MSP430 Compiler
+"C:/ti/ccs1250/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmspx --use_hw_mpy=none --include_path="C:/ti/ccs1250/ccs/ccs_base/msp430/include" --include_path="D:/Master1/Memory/Assignment_1/ç¯„ä?‹ç?‹å?ç¢¼/MSP-EXP430FR4133_Software_Examples_windows/Firmware/Source/OutOfBox_MSP430FR4133/OutOfBox_MSP430FR4133" --include_path="D:/Master1/Memory/Assignment_1/ç¯„ä?‹ç?‹å?ç¢¼/MSP-EXP430FR4133_Software_Examples_windows/Firmware/Source/OutOfBox_MSP430FR4133/OutOfBox_MSP430FR4133/driverlib/MSP430FR2xx_4xx" --include_path="C:/ti/ccs1250/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --advice:power="all" --advice:hw_config=all --define=__MSP430FR4133__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency="StopWatchMode.d_raw"  "../StopWatchMode.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'StopWatchMode.obj' failed
+"..\main.h", line 47: fatal error #1965: cannot open source file "driverlib.h"
+1 catastrophic error detected in the compilation of "../StopWatchMode.c".
+Compilation terminated.
+gmake: *** [StopWatchMode.obj] Error 1
+Building file: "../TempSensorMode.c"
+Invoking: MSP430 Compiler
+"C:/ti/ccs1250/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmspx --use_hw_mpy=none --include_path="C:/ti/ccs1250/ccs/ccs_base/msp430/include" --include_path="D:/Master1/Memory/Assignment_1/ç¯„ä?‹ç?‹å?ç¢¼/MSP-EXP430FR4133_Software_Examples_windows/Firmware/Source/OutOfBox_MSP430FR4133/OutOfBox_MSP430FR4133" --include_path="D:/Master1/Memory/Assignment_1/ç¯„ä?‹ç?‹å?ç¢¼/MSP-EXP430FR4133_Software_Examples_windows/Firmware/Source/OutOfBox_MSP430FR4133/OutOfBox_MSP430FR4133/driverlib/MSP430FR2xx_4xx" --include_path="C:/ti/ccs1250/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --advice:power="all" --advice:hw_config=all --define=__MSP430FR4133__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency="TempSensorMode.d_raw"  "../TempSensorMode.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'TempSensorMode.obj' failed
+"..\main.h", line 47: fatal error #1965: cannot open source file "driverlib.h"
+1 catastrophic error detected in the compilation of "../TempSensorMode.c".
+Compilation terminated.
+gmake: *** [TempSensorMode.obj] Error 1
+Building file: "../main.c"
+Invoking: MSP430 Compiler
+"C:/ti/ccs1250/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmspx --use_hw_mpy=none --include_path="C:/ti/ccs1250/ccs/ccs_base/msp430/include" --include_path="D:/Master1/Memory/Assignment_1/ç¯„ä?‹ç?‹å?ç¢¼/MSP-EXP430FR4133_Software_Examples_windows/Firmware/Source/OutOfBox_MSP430FR4133/OutOfBox_MSP430FR4133" --include_path="D:/Master1/Memory/Assignment_1/ç¯„ä?‹ç?‹å?ç¢¼/MSP-EXP430FR4133_Software_Examples_windows/Firmware/Source/OutOfBox_MSP430FR4133/OutOfBox_MSP430FR4133/driverlib/MSP430FR2xx_4xx" --include_path="C:/ti/ccs1250/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --advice:power="all" --advice:hw_config=all --define=__MSP430FR4133__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'main.obj' failed
+"..\main.h", line 47: fatal error #1965: cannot open source file "driverlib.h"
+1 catastrophic error detected in the compilation of "../main.c".
+Compilation terminated.
+gmake: *** [main.obj] Error 1
+Building file: "../hal_LCD.c"
+Invoking: MSP430 Compiler
+"C:/ti/ccs1250/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmspx --use_hw_mpy=none --include_path="C:/ti/ccs1250/ccs/ccs_base/msp430/include" --include_path="D:/Master1/Memory/Assignment_1/ç¯„ä?‹ç?‹å?ç¢¼/MSP-EXP430FR4133_Software_Examples_windows/Firmware/Source/OutOfBox_MSP430FR4133/OutOfBox_MSP430FR4133" --include_path="D:/Master1/Memory/Assignment_1/ç¯„ä?‹ç?‹å?ç¢¼/MSP-EXP430FR4133_Software_Examples_windows/Firmware/Source/OutOfBox_MSP430FR4133/OutOfBox_MSP430FR4133/driverlib/MSP430FR2xx_4xx" --include_path="C:/ti/ccs1250/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --advice:power="all" --advice:hw_config=all --define=__MSP430FR4133__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency="hal_LCD.d_raw"  "../hal_LCD.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'hal_LCD.obj' failed
+"..\main.h", line 47: fatal error #1965: cannot open source file "driverlib.h"
+1 catastrophic error detected in the compilation of "../hal_LCD.c".
+Compilation terminated.
+gmake: *** [hal_LCD.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
