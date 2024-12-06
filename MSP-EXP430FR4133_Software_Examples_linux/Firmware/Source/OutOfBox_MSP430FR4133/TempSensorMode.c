@@ -184,7 +184,7 @@ void tempSensorModeInit()
     RTC_stop(RTC_BASE);                           // Stop stopwatch
 
     // Check if any button is pressed
-    Timer_A_initUpMode(TIMER_A0_BASE, &initUpParam_A0);
+    // Timer_A_initUpMode(TIMER_A0_BASE, &initUpParam_A0);
 }
 
 void displayTemp()

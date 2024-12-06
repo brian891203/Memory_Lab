@@ -12,7 +12,8 @@ LDSCRIPT = /opt/msp430-gcc-9.3.1.2/lib/ldscripts/msp430fr4133.ld
 TARGET = main.elf
 
 # Source files
-SRCS = main.c hal_LCD.c TempSensorMode.c StopWatchMode.c
+# SRCS = main.c hal_LCD.c TempSensorMode.c StopWatchMode.c
+SRCS = main.c hal_LCD.c TempSensorMode.c
 
 # Object files
 OBJS = $(SRCS:.c=.o)
