@@ -43,7 +43,7 @@
 
 #include "main.h"
 #include "hal_LCD.h"
-#include "StopWatchMode.h"
+// #include "StopWatchMode.h"
 #include "TempSensorMode.h"
 
 // Backup Memory variables to track states through LPM3.5
@@ -81,9 +81,9 @@ int main(void) {
 
         switch(*mode)
         {
-            case STOPWATCH_MODE:
-                stopWatch();
-                break;
+            // case STOPWATCH_MODE:
+            //     stopWatch();
+            //     break;
             case TEMPSENSOR_MODE:
                 tempSensor();
                 break;
@@ -139,10 +139,10 @@ int main(void) {
                     displayScrollText("HOLD S1 AND S2 TO SWITCH MODES");
                 }
                 break;
-            case STOPWATCH_MODE:         // Stopwatch Timer mode
-                clearLCD();              // Clear all LCD segments
-                stopWatchModeInit();     // Initialize stopwatch mode
-                break;
+            // case STOPWATCH_MODE:         // Stopwatch Timer mode
+            //     clearLCD();              // Clear all LCD segments
+            //     stopWatchModeInit();     // Initialize stopwatch mode
+            //     break;
             case TEMPSENSOR_MODE:        // Temperature Sensor mode
                 clearLCD();              // Clear all LCD segments
                 tempSensorModeInit();    // initialize temperature mode
@@ -241,15 +241,15 @@ __interrupt void PORT1_ISR(void)
             {
                 *S1buttonDebounce = 1;                        // First high to low transition
                 holdCount = 0;
-                if (*mode == STOPWATCH_MODE)
-                {
-                    // Start/Pause stopwatch
-                    *stopWatchRunning ^= 0x1;
-                    if (*stopWatchRunning)
-                        RTC_start(RTC_BASE, RTC_CLOCKSOURCE_XT1CLK);
-                    else
-                        RTC_stop(RTC_BASE);
-                }
+                // if (*mode == STOPWATCH_MODE)
+                // {
+                //     // Start/Pause stopwatch
+                //     *stopWatchRunning ^= 0x1;
+                //     if (*stopWatchRunning)
+                //         RTC_start(RTC_BASE, RTC_CLOCKSOURCE_XT1CLK);
+                //     else
+                //         RTC_stop(RTC_BASE);
+                // }
                 if (*mode == TEMPSENSOR_MODE)
                 {
                     // Start/Pause temp sensor
@@ -291,30 +291,30 @@ __interrupt void PORT2_ISR(void)
                 holdCount = 0;
                 switch (*mode)
                 {
-                    case STOPWATCH_MODE:
-                        // Reset stopwatch if stopped; Split if running
-                        if (!(*stopWatchRunning))
-                        {
-                            if (LCDMEMCTL & LCDDISP)
-                                LCDMEMCTL &= ~LCDDISP;
-                            else
-                                resetStopWatch();
-                        }
-                        else
-                        {
-                            // Use LCD Blink memory to pause/resume stopwatch at split time
-                            LCDBMEMW[pos1/2] = LCDMEMW[pos1/2];
-                            LCDBMEMW[pos2/2] = LCDMEMW[pos2/2];
-                            LCDBMEMW[pos3/2] = LCDMEMW[pos3/2];
-                            LCDBMEMW[pos4/2] = LCDMEMW[pos4/2];
-                            LCDBMEMW[pos5/2] = LCDMEMW[pos5/2];
-                            LCDBMEMW[pos6/2] = LCDMEMW[pos6/2];
-                            LCDBMEMW[12/2] = LCDMEMW[12/2];
+                    // case STOPWATCH_MODE:
+                    //     // Reset stopwatch if stopped; Split if running
+                    //     if (!(*stopWatchRunning))
+                    //     {
+                    //         if (LCDMEMCTL & LCDDISP)
+                    //             LCDMEMCTL &= ~LCDDISP;
+                    //         else
+                    //             resetStopWatch();
+                    //     }
+                    //     else
+                    //     {
+                    //         // Use LCD Blink memory to pause/resume stopwatch at split time
+                    //         LCDBMEMW[pos1/2] = LCDMEMW[pos1/2];
+                    //         LCDBMEMW[pos2/2] = LCDMEMW[pos2/2];
+                    //         LCDBMEMW[pos3/2] = LCDMEMW[pos3/2];
+                    //         LCDBMEMW[pos4/2] = LCDMEMW[pos4/2];
+                    //         LCDBMEMW[pos5/2] = LCDMEMW[pos5/2];
+                    //         LCDBMEMW[pos6/2] = LCDMEMW[pos6/2];
+                    //         LCDBMEMW[12/2] = LCDMEMW[12/2];
 
-                            // Toggle between LCD Normal/Blink memory
-                            LCDMEMCTL ^= LCDDISP;
-                        }
-                        break;
+                    //         // Toggle between LCD Normal/Blink memory
+                    //         LCDMEMCTL ^= LCDDISP;
+                    //     }
+                    //     break;
                     case TEMPSENSOR_MODE:
                         // Toggle temperature unit flag
                         *tempUnit ^= 0x01;
@@ -350,18 +350,19 @@ __interrupt void TIMER0_A0_ISR (void)
 
             // Change mode
             if (*mode == STARTUP_MODE)
-                (*mode) = STOPWATCH_MODE;
-            else if (*mode == STOPWATCH_MODE)
-            {
+                // (*mode) = STOPWATCH_MODE;
                 (*mode) = TEMPSENSOR_MODE;
-                *stopWatchRunning = 0;
-                RTC_stop(RTC_BASE);
-            }
-            else if (*mode == TEMPSENSOR_MODE)
-            {
-                (*mode) = STOPWATCH_MODE;
-                *tempSensorRunning = 0;
-            }
+            // else if (*mode == STOPWATCH_MODE)
+            // {
+            //     (*mode) = TEMPSENSOR_MODE;
+            //     *stopWatchRunning = 0;
+            //     RTC_stop(RTC_BASE);
+            // }
+            // else if (*mode == TEMPSENSOR_MODE)
+            // {
+            //     (*mode) = STOPWATCH_MODE;
+            //     *tempSensorRunning = 0;
+            // }
             __bic_SR_register_on_exit(LPM3_bits);                // exit LPM3
         }
     }
@@ -380,17 +381,17 @@ __interrupt void TIMER0_A0_ISR (void)
         P4OUT &= ~BIT0;
     }
 
-    // Both button S1 & S2 released
-    if ((P1IN & BIT2) && (P2IN & BIT6))
-    {
-        // Stop timer A0
-    	Timer_A_stop(TIMER_A0_BASE);
-        if (*mode == STOPWATCH_MODE)
-            if (!(*stopWatchRunning))
-                __bic_SR_register_on_exit(LPM3_bits);            // exit LPM3
-        if (*mode == TEMPSENSOR_MODE)
-                __bic_SR_register_on_exit(LPM3_bits);            // exit LPM3
-    }
+    // // Both button S1 & S2 released
+    // if ((P1IN & BIT2) && (P2IN & BIT6))
+    // {
+    //     // Stop timer A0
+    // 	Timer_A_stop(TIMER_A0_BASE);
+    //     if (*mode == STOPWATCH_MODE)
+    //         if (!(*stopWatchRunning))
+    //             __bic_SR_register_on_exit(LPM3_bits);            // exit LPM3
+    //     if (*mode == TEMPSENSOR_MODE)
+    //             __bic_SR_register_on_exit(LPM3_bits);            // exit LPM3
+    // }
 }
 
 /*
@@ -408,25 +409,25 @@ __interrupt void RTC_ISR(void)
             {
                 __bic_SR_register_on_exit(LPM3_bits);            // exit LPM3
             }
-            if (*mode == STOPWATCH_MODE)
-            {
-                // Since RTC runs at 32768 Hz and isn't fast enough to count 10 ms exactly
-                // offset RTC counter every 100 10ms intervals to add up to 1s
-                // (327 * 32) + (328 * 68) = 32768
-                if((*count)==31)
-                {
-                    // Set RTC to interrupt after 328 XT1 cycles
-                    RTC_setModulo(RTC_BASE, 327);
-                }
-                else if((*count)==99)
-                {
-                    // Set RTC to interrupt after 327 XT1 cycles
-                    RTC_setModulo(RTC_BASE, 326);
-                    (*count)=0;
-                }
-                (*count)++;
-                __bic_SR_register_on_exit(LPM3_bits);            // exit LPM3
-            }
+            // if (*mode == STOPWATCH_MODE)
+            // {
+            //     // Since RTC runs at 32768 Hz and isn't fast enough to count 10 ms exactly
+            //     // offset RTC counter every 100 10ms intervals to add up to 1s
+            //     // (327 * 32) + (328 * 68) = 32768
+            //     if((*count)==31)
+            //     {
+            //         // Set RTC to interrupt after 328 XT1 cycles
+            //         RTC_setModulo(RTC_BASE, 327);
+            //     }
+            //     else if((*count)==99)
+            //     {
+            //         // Set RTC to interrupt after 327 XT1 cycles
+            //         RTC_setModulo(RTC_BASE, 326);
+            //         (*count)=0;
+            //     }
+            //     (*count)++;
+            //     __bic_SR_register_on_exit(LPM3_bits);            // exit LPM3
+            // }
             if (*mode == TEMPSENSOR_MODE)
                 __bic_SR_register_on_exit(LPM3_bits);            // exit LPM3
             break;
