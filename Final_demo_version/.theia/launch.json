@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "OutOfBox_MSP430FR4133",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "OutOfBox_MSP430FR4133",
+                "resourceId": "/OutOfBox_MSP430FR4133"
+            }
+        }
+    ]
+}

@@ -31,46 +31,44 @@
  * --/COPYRIGHT--*/
 /*******************************************************************************
  *
- * main.h
+ * hal_LCD.h
  *
- * Out of Box Demo for the MSP-EXP430FR4133
- * Main loop, initialization, and interrupt service routines
+ * Hardware abstraction layer for the FH-1138P Segmented LCD
  *
- * Updated for Temperature Sensor and FRAM Usage
+ * September 2014
+ * E. Chen
  *
  ******************************************************************************/
 
-#ifndef MAIN_H_
-#define MAIN_H_
+#include <msp430fr4133.h>
 
-#include <driverlib.h>
+#ifndef HAL_LCD_H_
+#define HAL_LCD_H_
 
-// Modes for system state
-#define STARTUP_MODE 0
-#define TEMPSENSOR_MODE 1
+#define pos1 4   /* Digit A1 - L4  */
+#define pos2 6   /* Digit A2 - L6  */
+#define pos3 8   /* Digit A3 - L8  */
+#define pos4 10  /* Digit A4 - L10 */
+#define pos5 2   /* Digit A5 - L2  */
+#define pos6 18  /* Digit A6 - L18 */
 
-// Memory address for FRAM storage
-#define FRAM_TEMP_ADDRESS &BAKMEM7
+// Define word access definitions to LCD memories
+#define LCDMEMW ((int*)LCDMEM)
 
-// Temperature threshold in Celsius
-#define TEMP_THRESHOLD 30
+// Workaround LCDBMEM definition bug in IAR header file
+#ifdef __IAR_SYSTEMS_ICC__
+#define LCDBMEMW ((int*)&LCDM32)
+#else
+#define LCDBMEMW ((int*)LCDBMEM)
+#endif
 
-// External variable declarations
-extern volatile unsigned char * tempSensorRunning;
-extern volatile unsigned char * mode;
-extern volatile unsigned short *degC;  // 添加對 degC 的外部宣告
+extern const char digit[10][2];
+extern const char alphabetBig[26][2];
 
-// Timer configuration parameter
-// extern Timer_A_initUpModeParam initUpParam_A0;
+void Init_LCD(void);
+void displayScrollText(char*);
+void showChar(char, int);
+void clearLCD(void);
 
-// Function prototypes
-void Init_GPIO(void);
-// void Init_Clock(void);
-void Init_RTC(void);
-void initTemperatureSensor(void);
-unsigned int readTemperature(void);
-void storeTemperatureToFRAM(unsigned int temp);
-unsigned int retrieveTemperatureFromFRAM(void);
-void checkTemperatureThreshold(unsigned int temperature);
 
-#endif /* MAIN_H_ */
+#endif /* HAL_LCD_H_ */

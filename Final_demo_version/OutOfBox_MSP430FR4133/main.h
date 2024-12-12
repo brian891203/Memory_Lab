@@ -36,7 +36,8 @@
  * Out of Box Demo for the MSP-EXP430FR4133
  * Main loop, initialization, and interrupt service routines
  *
- * Updated for Temperature Sensor and FRAM Usage
+ * September 2014
+ * E. Chen
  *
  ******************************************************************************/
 
@@ -45,32 +46,20 @@
 
 #include <driverlib.h>
 
-// Modes for system state
 #define STARTUP_MODE 0
-#define TEMPSENSOR_MODE 1
+#define SAFE_SHUTDOWN_MODE 4
 
-// Memory address for FRAM storage
-#define FRAM_TEMP_ADDRESS &BAKMEM7
-
-// Temperature threshold in Celsius
-#define TEMP_THRESHOLD 30
-
-// External variable declarations
+extern volatile unsigned char * stopWatchRunning;
 extern volatile unsigned char * tempSensorRunning;
 extern volatile unsigned char * mode;
-extern volatile unsigned short *degC;  // 添加對 degC 的外部宣告
+extern volatile unsigned char * S1buttonDebounce;
+extern volatile unsigned char * S2buttonDebounce;
 
-// Timer configuration parameter
-// extern Timer_A_initUpModeParam initUpParam_A0;
+extern Timer_A_initUpModeParam initUpParam_A0;
 
-// Function prototypes
 void Init_GPIO(void);
-// void Init_Clock(void);
+void Init_Clock(void);
 void Init_RTC(void);
-void initTemperatureSensor(void);
-unsigned int readTemperature(void);
-void storeTemperatureToFRAM(unsigned int temp);
-unsigned int retrieveTemperatureFromFRAM(void);
-void checkTemperatureThreshold(unsigned int temperature);
+
 
 #endif /* MAIN_H_ */

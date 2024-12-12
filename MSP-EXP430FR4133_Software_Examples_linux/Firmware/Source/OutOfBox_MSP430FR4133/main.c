@@ -12,6 +12,7 @@ volatile unsigned int holdCount = 0;
 // FRAM 地址，用於存儲溫度數據
 volatile unsigned int *framTemperature = (unsigned int *)0x1800; // FRAM address for temperature storage
 #define TEMP_THRESHOLD 30  // 溫度閾值，單位為攝氏度
+#define DEFAULT_TEMPERATURE 250  // 預設溫度值 (25.0°C)
 
 /*
  * main.c
@@ -23,15 +24,18 @@ int main(void) {
     // 初始化外圍設備
     Init_GPIO();
     Init_LCD();
-    displayScrollText("WELCOME TO THE FR4133 LAUNCHPAD");
-    displayScrollText("112526011 Lab 1");
+    displayScrollText("112526011 LAB 1");
 
     // 初始化溫度感測模式
     tempSensorModeInit();
 
-    // 從 FRAM 中檢索上次存儲的溫度數據
+    // 檢查並從 FRAM 中檢索上次存儲的溫度數據
+    if (*framTemperature > 1000 || *framTemperature < 0) {
+        *framTemperature = DEFAULT_TEMPERATURE;  // 設置預設溫度
+    }
     unsigned int lastTemperature = *framTemperature;
     *degC = lastTemperature;  // 設定上次的攝氏溫度
+
     displayScrollText("LAST TEMP:");
     displayTemp();
 

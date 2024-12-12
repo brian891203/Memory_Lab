@@ -1,5 +1,5 @@
 /* --COPYRIGHT--,BSD
- * Copyright (c) 2014, Texas Instruments Incorporated
+ * Copyright (c) 2016, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,48 +29,55 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * --/COPYRIGHT--*/
-/*******************************************************************************
- *
- * main.h
- *
- * Out of Box Demo for the MSP-EXP430FR4133
- * Main loop, initialization, and interrupt service routines
- *
- * Updated for Temperature Sensor and FRAM Usage
- *
- ******************************************************************************/
+//*****************************************************************************
+//
+// tia.c - Driver for the tia Module.
+//
+//*****************************************************************************
 
-#ifndef MAIN_H_
-#define MAIN_H_
+//*****************************************************************************
+//
+//! \addtogroup tia_api tia
+//! @{
+//
+//*****************************************************************************
 
-#include <driverlib.h>
+#include "inc/hw_memmap.h"
 
-// Modes for system state
-#define STARTUP_MODE 0
-#define TEMPSENSOR_MODE 1
+#ifdef __MSP430_HAS_TRIx__
+#include "tia.h"
 
-// Memory address for FRAM storage
-#define FRAM_TEMP_ADDRESS &BAKMEM7
+#include <assert.h>
 
-// Temperature threshold in Celsius
-#define TEMP_THRESHOLD 30
+void TIA_selectPositiveInput(uint16_t baseAddress,
+                             uint16_t positiveInput)
+{
+    HWREG16(baseAddress + OFS_TRI0CTL) &= ~TRIPSEL_3;
 
-// External variable declarations
-extern volatile unsigned char * tempSensorRunning;
-extern volatile unsigned char * mode;
-extern volatile unsigned short *degC;  // 添加對 degC 的外部宣告
+    HWREG16(baseAddress + OFS_TRI0CTL) |= positiveInput;
+}
 
-// Timer configuration parameter
-// extern Timer_A_initUpModeParam initUpParam_A0;
+void TIA_selectPowerMode(uint16_t baseAddress,
+                         uint16_t powerMode)
+{
+    HWREG16(baseAddress + OFS_TRI0CTL) &= ~TRIPM;
+    HWREG16(baseAddress + OFS_TRI0CTL) |= powerMode;
+}
 
-// Function prototypes
-void Init_GPIO(void);
-// void Init_Clock(void);
-void Init_RTC(void);
-void initTemperatureSensor(void);
-unsigned int readTemperature(void);
-void storeTemperatureToFRAM(unsigned int temp);
-unsigned int retrieveTemperatureFromFRAM(void);
-void checkTemperatureThreshold(unsigned int temperature);
+void TIA_enable(uint16_t baseAddress)
+{
+    HWREG16(baseAddress + OFS_TRI0CTL) |= TRIEN;
+}
 
-#endif /* MAIN_H_ */
+void TIA_disable(uint16_t baseAddress)
+{
+    HWREG16(baseAddress + OFS_TRI0CTL) &= ~TRIEN;
+}
+
+#endif
+//*****************************************************************************
+//
+//! Close the doxygen group for tia_api
+//! @}
+//
+//*****************************************************************************

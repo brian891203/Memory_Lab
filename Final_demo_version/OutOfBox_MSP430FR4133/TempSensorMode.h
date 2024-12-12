@@ -31,46 +31,38 @@
  * --/COPYRIGHT--*/
 /*******************************************************************************
  *
- * main.h
+ * TempSensorMode.h
  *
- * Out of Box Demo for the MSP-EXP430FR4133
- * Main loop, initialization, and interrupt service routines
+ * Simple thermometer application that uses the internal temperature sensor to
+ * measure and display die temperature on the segmented LCD screen
  *
- * Updated for Temperature Sensor and FRAM Usage
+ * September 2014
+ * E. Chen
  *
  ******************************************************************************/
 
-#ifndef MAIN_H_
-#define MAIN_H_
+#ifndef TEMPSENSORMODE_H_
+#define TEMPSENSORMODE_H_
 
-#include <driverlib.h>
+#include <msp430fr4133.h>
 
-// Modes for system state
-#define STARTUP_MODE 0
-#define TEMPSENSOR_MODE 1
+#define Q1_MODE 1
+#define Q2_MODE 2
+#define Q3_MODE 3
 
-// Memory address for FRAM storage
-#define FRAM_TEMP_ADDRESS &BAKMEM7
+extern volatile unsigned char *tempUnit;
+extern volatile unsigned char *flashWUnit;
+extern volatile unsigned short *degC;
+extern volatile unsigned short *degF;
+extern volatile unsigned short *recordDegC;
+extern volatile unsigned short *recordDegF;
 
-// Temperature threshold in Celsius
-#define TEMP_THRESHOLD 30
+void tempSensor(void);
+void tempSensorModeInit(void);
+void displayTemp(void);
 
-// External variable declarations
-extern volatile unsigned char * tempSensorRunning;
-extern volatile unsigned char * mode;
-extern volatile unsigned short *degC;  // 添加對 degC 的外部宣告
+// 新增功能函數
+void Q2_restoreTemperature(void);
+void Q3_temperatureThresholdCheck(void);
 
-// Timer configuration parameter
-// extern Timer_A_initUpModeParam initUpParam_A0;
-
-// Function prototypes
-void Init_GPIO(void);
-// void Init_Clock(void);
-void Init_RTC(void);
-void initTemperatureSensor(void);
-unsigned int readTemperature(void);
-void storeTemperatureToFRAM(unsigned int temp);
-unsigned int retrieveTemperatureFromFRAM(void);
-void checkTemperatureThreshold(unsigned int temperature);
-
-#endif /* MAIN_H_ */
+#endif /* TEMPSENSORMODE_H_ */

@@ -1,5 +1,5 @@
 /* --COPYRIGHT--,BSD
- * Copyright (c) 2014, Texas Instruments Incorporated
+ * Copyright (c) 2016, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,48 +29,27 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * --/COPYRIGHT--*/
-/*******************************************************************************
- *
- * main.h
- *
- * Out of Box Demo for the MSP-EXP430FR4133
- * Main loop, initialization, and interrupt service routines
- *
- * Updated for Temperature Sensor and FRAM Usage
- *
- ******************************************************************************/
+#include "inc/hw_memmap.h"
 
-#ifndef MAIN_H_
-#define MAIN_H_
-
-#include <driverlib.h>
-
-// Modes for system state
-#define STARTUP_MODE 0
-#define TEMPSENSOR_MODE 1
-
-// Memory address for FRAM storage
-#define FRAM_TEMP_ADDRESS &BAKMEM7
-
-// Temperature threshold in Celsius
-#define TEMP_THRESHOLD 30
-
-// External variable declarations
-extern volatile unsigned char * tempSensorRunning;
-extern volatile unsigned char * mode;
-extern volatile unsigned short *degC;  // 添加對 degC 的外部宣告
-
-// Timer configuration parameter
-// extern Timer_A_initUpModeParam initUpParam_A0;
-
-// Function prototypes
-void Init_GPIO(void);
-// void Init_Clock(void);
-void Init_RTC(void);
-void initTemperatureSensor(void);
-unsigned int readTemperature(void);
-void storeTemperatureToFRAM(unsigned int temp);
-unsigned int retrieveTemperatureFromFRAM(void);
-void checkTemperatureThreshold(unsigned int temperature);
-
-#endif /* MAIN_H_ */
+#include "adc.h"
+#include "crc.h"
+#include "cs.h"
+#include "ecomp.h"
+#include "eusci_a_spi.h"
+#include "eusci_a_uart.h"
+#include "eusci_b_i2c.h"
+#include "eusci_b_spi.h"
+#include "framctl.h"
+#include "gpio.h"
+#include "lcd_e.h"
+#include "mpy32.h"
+#include "pmm.h"
+#include "rtc.h"
+#include "sac.h"
+#include "sfr.h"
+#include "sysctl.h"
+#include "tia.h"
+#include "timer_a.h"
+#include "timer_b.h"
+#include "tlv.h"
+#include "wdt_a.h"
